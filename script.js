@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let gadgetsCode = '';
         elementsOnCanvas.forEach(element => {
             const x = pxToPML(element.left);
-            const y = pxToPML(element.top);
+            const y = pxTopToPML(element.top); // <-- Aqui usa a nova função!
             const width = pxToPML(element.width);
             const height = pxToPML(element.height);
 
@@ -846,4 +846,11 @@ exit
     renderFormProperties();
     updateCanvasSizeAndElements();
     renderPropertiesPanel(null);
+
+    function pxTopToPML(topPx) {
+        // Considera a altura real do canvas e do form em PML
+        const canvasHeightPx = formHeightPML * CANVAS_UNIT_MULTIPLIER;
+        if (canvasHeightPx === 0) return 0;
+        return Math.round((topPx / canvasHeightPx) * formHeightPML * 100) / 100;
+    }
 });
