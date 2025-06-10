@@ -453,6 +453,34 @@ exit
             tbody.appendChild(tr);
         }
 
+        // Linha para o botão de deletar
+        const trDelete = document.createElement('tr');
+        const tdLabelDelete = document.createElement('td');
+        tdLabelDelete.className = 'prop-label';
+        tdLabelDelete.textContent = ''; // sem label
+        const tdInputDelete = document.createElement('td');
+        const btnDelete = document.createElement('button');
+        btnDelete.textContent = 'Excluir elemento';
+        btnDelete.style.background = '#e74c3c';
+        btnDelete.style.color = '#fff';
+        btnDelete.style.border = 'none';
+        btnDelete.style.borderRadius = '4px';
+        btnDelete.style.padding = '6px 10px';
+        btnDelete.style.cursor = 'pointer';
+        btnDelete.onclick = () => {
+            // Remover o elemento do array e do DOM
+            elementsOnCanvas = elementsOnCanvas.filter(el => el.id !== elementData.id);
+            const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"]`);
+            if (domEl) domEl.remove();
+            selectedElementId = null;
+            renderPropertiesPanel(null);
+            generateCode();
+        };
+        tdInputDelete.appendChild(btnDelete);
+        trDelete.appendChild(tdLabelDelete);
+        trDelete.appendChild(tdInputDelete);
+        tbody.appendChild(trDelete);
+
         table.appendChild(tbody);
         elementPropertiesDiv.appendChild(table);
     }
