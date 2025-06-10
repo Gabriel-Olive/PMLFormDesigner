@@ -298,6 +298,14 @@ exit
             input.id = `prop-${prop}-${elementData.id}`;
             input.oninput = (e) => {
                 elementData[prop] = type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value;
+                // Atualiza o DOM do elemento na área da GUI
+                const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"]`);
+                if (domEl) {
+                    if (prop === 'left') domEl.style.left = elementData.left + 'px';
+                    if (prop === 'top') domEl.style.top = elementData.top + 'px';
+                    if (prop === 'width') domEl.style.width = elementData.width + 'px';
+                    if (prop === 'height') domEl.style.height = elementData.height + 'px';
+                }
                 generateCode();
             };
             tdInput.appendChild(input);
