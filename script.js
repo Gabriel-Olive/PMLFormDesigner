@@ -130,9 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let gadgetsCode = '';
         elementsOnCanvas.forEach(element => {
             const x = pxToPML(element.left);
-            const y = pxTopToPML(element.top); // <-- Aqui usa a nova função!
+            const y = pxTopToPML(element.top);
             const width = pxToPML(element.width);
-            const height = pxToPML(element.height);
+            const height = pxHeightToPML(element.height); // <-- altura proporcional
 
             switch (element.type) {
                 case 'Button':
@@ -852,5 +852,11 @@ exit
         const canvasHeightPx = formHeightPML * CANVAS_UNIT_MULTIPLIER;
         if (canvasHeightPx === 0) return 0;
         return Math.round((topPx / canvasHeightPx) * formHeightPML * 100) / 100;
+    }
+
+    function pxHeightToPML(heightPx) {
+        const canvasHeightPx = formHeightPML * CANVAS_UNIT_MULTIPLIER;
+        if (canvasHeightPx === 0) return 0;
+        return Math.round((heightPx / canvasHeightPx) * formHeightPML * 100) / 100;
     }
 });
