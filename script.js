@@ -128,11 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generateCode() {
         let gadgetsCode = '';
-        elementsOnCanvas.forEach(element => {
+        elementsOnCanvas.forEach(element => { // <-- corrigido aqui
             const x = pxToPML(element.left);
             const y = pxTopToPML(element.top);
             const width = pxToPML(element.width);
-            const height = pxHeightToPML(element.height); // <-- altura proporcional
+            const height = pxHeightToPML(element.height);
 
             switch (element.type) {
                 case 'Button':
@@ -280,7 +280,7 @@ exit
         table.className = 'prop-table';
         const tbody = document.createElement('tbody');
 
-        // Exemplo de propriedades comuns
+        // Propriedades comuns
         [
             { label: 'Left (px)', prop: 'left', type: 'number' },
             { label: 'Top (px)', prop: 'top', type: 'number' },
@@ -295,6 +295,7 @@ exit
             const input = document.createElement('input');
             input.type = type;
             input.value = elementData[prop];
+            input.id = `prop-${prop}-${elementData.id}`;
             input.oninput = (e) => {
                 elementData[prop] = type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value;
                 generateCode();
@@ -305,7 +306,152 @@ exit
             tbody.appendChild(tr);
         });
 
-        // Adicione propriedades específicas do tipo aqui...
+        // Propriedades específicas por tipo
+        if (elementData.type === 'Button') {
+            // Texto do botão
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.className = 'prop-label';
+            tdLabel.textContent = 'Texto';
+            const tdInput = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = elementData.text;
+            input.oninput = (e) => {
+                elementData.text = e.target.value;
+                // Atualiza o texto no botão na tela
+                const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"] span`);
+                if (domEl) domEl.textContent = e.target.value;
+                generateCode();
+            };
+            tdInput.appendChild(input);
+            tr.appendChild(tdLabel);
+            tr.appendChild(tdInput);
+            tbody.appendChild(tr);
+        } else if (elementData.type === 'Toggle') {
+            // Texto do toggle
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.className = 'prop-label';
+            tdLabel.textContent = 'Texto';
+            const tdInput = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = elementData.tagText;
+            input.oninput = (e) => {
+                elementData.tagText = e.target.value;
+                const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"] span`);
+                if (domEl) domEl.textContent = e.target.value;
+                generateCode();
+            };
+            tdInput.appendChild(input);
+            tr.appendChild(tdLabel);
+            tr.appendChild(tdInput);
+            tbody.appendChild(tr);
+        } else if (elementData.type === 'Paragraph') {
+            // Texto do parágrafo
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.className = 'prop-label';
+            tdLabel.textContent = 'Texto';
+            const tdInput = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = elementData.content;
+            input.oninput = (e) => {
+                elementData.content = e.target.value;
+                const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"] span`);
+                if (domEl) domEl.textContent = e.target.value;
+                generateCode();
+            };
+            tdInput.appendChild(input);
+            tr.appendChild(tdLabel);
+            tr.appendChild(tdInput);
+            tbody.appendChild(tr);
+        } else if (elementData.type === 'Text') {
+            // Valor inicial
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.className = 'prop-label';
+            tdLabel.textContent = 'Valor inicial';
+            const tdInput = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = elementData.initialValue;
+            input.oninput = (e) => {
+                elementData.initialValue = e.target.value;
+                const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"] .display-content`);
+                if (domEl) domEl.textContent = e.target.value;
+                generateCode();
+            };
+            tdInput.appendChild(input);
+            tr.appendChild(tdLabel);
+            tr.appendChild(tdInput);
+            tbody.appendChild(tr);
+
+            // Tipo de valor
+            const trType = document.createElement('tr');
+            const tdLabelType = document.createElement('td');
+            tdLabelType.className = 'prop-label';
+            tdLabelType.textContent = 'Tipo';
+            const tdInputType = document.createElement('td');
+            const select = document.createElement('select');
+            ['STRING', 'NUMBER', 'DATE'].forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt;
+                option.textContent = opt;
+                if (elementData.valueType === opt) option.selected = true;
+                select.appendChild(option);
+            });
+            select.onchange = (e) => {
+                elementData.valueType = e.target.value;
+                generateCode();
+            };
+            tdInputType.appendChild(select);
+            trType.appendChild(tdLabelType);
+            trType.appendChild(tdInputType);
+            tbody.appendChild(trType);
+        } else if (elementData.type === 'Dropdown') {
+            // Texto do dropdown
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.className = 'prop-label';
+            tdLabel.textContent = 'Texto';
+            const tdInput = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = elementData.optionText;
+            input.oninput = (e) => {
+                elementData.optionText = e.target.value;
+                const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"] span`);
+                if (domEl) domEl.textContent = e.target.value;
+                generateCode();
+            };
+            tdInput.appendChild(input);
+            tr.appendChild(tdLabel);
+            tr.appendChild(tdInput);
+            tbody.appendChild(tr);
+        } else if (elementData.type === 'List') {
+            // Texto da lista
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.className = 'prop-label';
+            tdLabel.textContent = 'Texto';
+            const tdInput = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = elementData.listText;
+            input.oninput = (e) => {
+                elementData.listText = e.target.value;
+                const domEl = document.querySelector(`.gui-element[data-id="${elementData.id}"] span`);
+                if (domEl) domEl.textContent = e.target.value;
+                generateCode();
+            };
+            tdInput.appendChild(input);
+            tr.appendChild(tdLabel);
+            tr.appendChild(tdInput);
+            tbody.appendChild(tr);
+        }
 
         table.appendChild(tbody);
         elementPropertiesDiv.appendChild(table);
