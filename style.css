@@ -108,12 +108,13 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     padding: 15px;
-    /* Removendo flex-direction: column e usando flexbox para layout em linha */
     display: flex;
-    flex-wrap: wrap; /* Permite quebrar em várias linhas se necessário */
-    align-items: flex-end; /* Alinha os itens ao final do container */
-    gap: 15px 20px; /* Espaçamento entre os itens (linha, coluna) */
-    justify-content: space-between; /* Espaça os itens horizontalmente */
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px 10px;
+    justify-content: flex-start;
+    max-width: 220px; /* Reduzido para cerca de metade do padrão anterior */
+    min-width: 180px;
 }
 
 .form-properties h2 {
@@ -123,8 +124,8 @@ body {
 
 .form-properties .prop-group {
     /* flex: 1; Removido para ter controle mais fino sobre a largura */
-    min-width: 120px; /* Largura mínima para os campos */
-    flex-basis: calc(50% - 10px); /* Ocupa cerca de metade da largura disponível menos o gap */
+    min-width: 90px;
+    flex-basis: 100%;
     margin-bottom: 0; /* Removido margin-bottom para usar gap do flexbox */
 }
 
