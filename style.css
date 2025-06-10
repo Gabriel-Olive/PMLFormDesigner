@@ -113,8 +113,8 @@ body {
     align-items: flex-end;
     gap: 10px 10px;
     justify-content: flex-start;
-    max-width: 220px; /* Reduzido para cerca de metade do padrão anterior */
-    min-width: 180px;
+    max-width: 120px; /* Mais estreito */
+    min-width: 100px;
 }
 
 .form-properties h2 {
@@ -471,17 +471,17 @@ body {
 
 /* Estilos para o painel de código gerado */
 .code-output {
-    flex: 1;
-    background-color: #2b2b2b; /* Fundo escuro */
-    color: #f8f8f2; /* Cor do texto claro */
-    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace; /* Fonte monoespaçada */
+    flex: 2; /* Ocupa mais espaço horizontal */
+    background-color: #2b2b2b;
+    color: #f8f8f2;
+    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
     font-size: 0.85em;
     line-height: 1.4;
     overflow-y: auto;
     max-height: 600px;
     padding: 15px;
-    border-radius: 8px; /* Borda arredondada */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .code-output h2 {
