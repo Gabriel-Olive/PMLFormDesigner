@@ -180,37 +180,88 @@ exit
     function renderFormProperties() {
         formPropertiesDiv.innerHTML = '<h2>Propriedades da Forma</h2>';
 
-        let formNameGroup = document.createElement('div');
-        formNameGroup.className = 'prop-group';
-        createPropInput(formNameGroup, 'Nome da Forma', 'formName', formName, 'text', [], (val) => {
-            formName = val;
+        const table = document.createElement('table');
+        table.className = 'prop-table';
+        const tbody = document.createElement('tbody');
+
+        // Nome da Forma
+        let trName = document.createElement('tr');
+        let tdLabelName = document.createElement('td');
+        tdLabelName.className = 'prop-label';
+        tdLabelName.textContent = 'Nome';
+        let tdInputName = document.createElement('td');
+        let inputName = document.createElement('input');
+        inputName.type = 'text';
+        inputName.value = formName;
+        inputName.oninput = (e) => {
+            formName = e.target.value;
             generateCode();
-        }, false); // Passar false para 'isElementProp'
-        formPropertiesDiv.appendChild(formNameGroup);
+        };
+        tdInputName.appendChild(inputName);
+        trName.appendChild(tdLabelName);
+        trName.appendChild(tdInputName);
+        tbody.appendChild(trName);
 
-        let formWidthGroup = document.createElement('div');
-        formWidthGroup.className = 'prop-group';
-        createPropInput(formWidthGroup, 'Largura (PML)', 'formWidth', formWidthPML, 'number', [], (val) => {
-            formWidthPML = parseFloat(val) || 0;
+        // Largura
+        let trWidth = document.createElement('tr');
+        let tdLabelWidth = document.createElement('td');
+        tdLabelWidth.className = 'prop-label';
+        tdLabelWidth.textContent = 'Largura (PML)';
+        let tdInputWidth = document.createElement('td');
+        let inputWidth = document.createElement('input');
+        inputWidth.type = 'number';
+        inputWidth.value = formWidthPML;
+        inputWidth.step = '0.01';
+        inputWidth.min = '10';
+        inputWidth.oninput = (e) => {
+            formWidthPML = parseFloat(e.target.value) || 10;
             updateCanvasSizeAndElements();
-        }, false); // Passar false para 'isElementProp'
-        formPropertiesDiv.appendChild(formWidthGroup);
+        };
+        tdInputWidth.appendChild(inputWidth);
+        trWidth.appendChild(tdLabelWidth);
+        trWidth.appendChild(tdInputWidth);
+        tbody.appendChild(trWidth);
 
-        let formTitleGroup = document.createElement('div');
-        formTitleGroup.className = 'prop-group';
-        createPropInput(formTitleGroup, 'Título da Forma', 'formTitle', formTitle, 'text', [], (val) => {
-            formTitle = val;
+        // Título
+        let trTitle = document.createElement('tr');
+        let tdLabelTitle = document.createElement('td');
+        tdLabelTitle.className = 'prop-label';
+        tdLabelTitle.textContent = 'Título';
+        let tdInputTitle = document.createElement('td');
+        let inputTitle = document.createElement('input');
+        inputTitle.type = 'text';
+        inputTitle.value = formTitle;
+        inputTitle.oninput = (e) => {
+            formTitle = e.target.value;
             generateCode();
-        }, false); // Passar false para 'isElementProp'
-        formPropertiesDiv.appendChild(formTitleGroup);
+        };
+        tdInputTitle.appendChild(inputTitle);
+        trTitle.appendChild(tdLabelTitle);
+        trTitle.appendChild(tdInputTitle);
+        tbody.appendChild(trTitle);
 
-        let formHeightGroup = document.createElement('div');
-        formHeightGroup.className = 'prop-group';
-        createPropInput(formHeightGroup, 'Altura (PML)', 'formHeight', formHeightPML, 'number', [], (val) => {
-            formHeightPML = parseFloat(val) || 0;
+        // Altura
+        let trHeight = document.createElement('tr');
+        let tdLabelHeight = document.createElement('td');
+        tdLabelHeight.className = 'prop-label';
+        tdLabelHeight.textContent = 'Altura (PML)';
+        let tdInputHeight = document.createElement('td');
+        let inputHeight = document.createElement('input');
+        inputHeight.type = 'number';
+        inputHeight.value = formHeightPML;
+        inputHeight.step = '0.01';
+        inputHeight.min = '10';
+        inputHeight.oninput = (e) => {
+            formHeightPML = parseFloat(e.target.value) || 10;
             updateCanvasSizeAndElements();
-        }, false); // Passar false para 'isElementProp'
-        formPropertiesDiv.appendChild(formHeightGroup);
+        };
+        tdInputHeight.appendChild(inputHeight);
+        trHeight.appendChild(tdLabelHeight);
+        trHeight.appendChild(tdInputHeight);
+        tbody.appendChild(trHeight);
+
+        table.appendChild(tbody);
+        formPropertiesDiv.appendChild(table);
     }
 
 
