@@ -530,3 +530,61 @@ body {
     width: 100%;
     /* Um espaço visual, pode ser só margin ou uma linha sutil */
 }
+
+.prop-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 0.98em;
+}
+
+.prop-table tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.prop-table td {
+    padding: 3px 6px;
+    vertical-align: middle;
+}
+
+.prop-label {
+    color: #444;
+    background: #f6f6f6;
+    width: 45%;
+    font-weight: 500;
+    border-right: 1px solid #e0e0e0;
+    font-size: 0.97em;
+}
+
+.prop-table input[type="text"],
+.prop-table input[type="number"],
+.prop-table select {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 1em;
+    padding: 2px 4px;
+    color: #222;
+    outline: none;
+}
+
+.prop-table input:focus, .prop-table select:focus {
+    background: #eaf3fb;
+}
+
+.form-properties, .properties-panel {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    padding: 10px 10px 5px 10px;
+    margin-bottom: 10px;
+    max-width: 320px;
+}
+
+.form-properties h2, .properties-panel h2 {
+    font-size: 1.1em;
+    margin: 0 0 8px 0;
+    color: #2c3e50;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 4px;
+}

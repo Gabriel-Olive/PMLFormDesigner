@@ -216,149 +216,48 @@ exit
 
     // --- Painel de Propriedades do Elemento ---
     function renderPropertiesPanel(elementData) {
-        elementPropertiesDiv.innerHTML = ''; // Limpa o painel a cada renderização
-        
+        elementPropertiesDiv.innerHTML = '';
         if (!elementData) {
             noElementSelectedDiv.style.display = 'block';
             elementPropertiesDiv.style.display = 'none';
             return;
         }
-
         noElementSelectedDiv.style.display = 'none';
         elementPropertiesDiv.style.display = 'block';
 
-        const title = document.createElement('h3');
-        title.textContent = `${elementData.type} (${elementData.id})`;
-        elementPropertiesDiv.appendChild(title);
+        const table = document.createElement('table');
+        table.className = 'prop-table';
+        const tbody = document.createElement('tbody');
 
-        const domElement = document.querySelector(`.gui-element[data-id="${elementData.id}"]`);
-
-        // Cria os campos de propriedade, mas não chama renderPropertiesPanel novamente
-        createPropInput(elementPropertiesDiv, 'Left (px)', 'left', elementData.left, 'number', [], (val) => {
-            elementData.left = Math.max(0, val);
-            if (domElement) domElement.style.left = `${elementData.left}px`;
-            generateCode();
-        }, true); // Passar true para 'isElementProp'
-        
-        createPropInput(elementPropertiesDiv, 'Top (px)', 'top', elementData.top, 'number', [], (val) => {
-            elementData.top = Math.max(0, val);
-            if (domElement) domElement.style.top = `${elementData.top}px`;
-            generateCode();
-        }, true); // Passar true para 'isElementProp'
-
-        if (elementData.type !== 'Toggle') {
-            createPropInput(elementPropertiesDiv, 'Largura (px)', 'width', elementData.width, 'number', [], (val) => {
-                elementData.width = Math.max(elementData.minWidth || 50, val);
-                if (domElement) {
-                    domElement.style.width = `${elementData.width}px`;
-                    applyContentScaling(domElement, elementData); // Atualiza a escala
-                }
+        // Exemplo de propriedades comuns
+        [
+            { label: 'Left (px)', prop: 'left', type: 'number' },
+            { label: 'Top (px)', prop: 'top', type: 'number' },
+            { label: 'Largura (px)', prop: 'width', type: 'number' },
+            { label: 'Altura (px)', prop: 'height', type: 'number' }
+        ].forEach(({label, prop, type}) => {
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.className = 'prop-label';
+            tdLabel.textContent = label;
+            const tdInput = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = type;
+            input.value = elementData[prop];
+            input.oninput = (e) => {
+                elementData[prop] = type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value;
                 generateCode();
-            }, true); // Passar true para 'isElementProp'
+            };
+            tdInput.appendChild(input);
+            tr.appendChild(tdLabel);
+            tr.appendChild(tdInput);
+            tbody.appendChild(tr);
+        });
 
-            if (elementData.type !== 'List') {
-                 createPropInput(elementPropertiesDiv, 'Altura (px)', 'height', elementData.height, 'number', [], (val) => {
-                    elementData.height = Math.max(elementData.minHeight || 23, val);
-                    if (domElement) {
-                        domElement.style.height = `${elementData.height}px`;
-                        applyContentScaling(domElement, elementData); // Atualiza a escala
-                    }
-                    generateCode();
-                }, true); // Passar true para 'isElementProp'
-            }
-        }
+        // Adicione propriedades específicas do tipo aqui...
 
-        switch (elementData.type) {
-            case 'Button':
-                createPropInput(elementPropertiesDiv, 'Texto do Botão', 'text', elementData.text, 'text', [], (val) => {
-                    elementData.text = val;
-                    const contentSpan = domElement.querySelector('span');
-                    if (contentSpan) {
-                        contentSpan.textContent = val; // ATUALIZA O TEXTO NA GUI
-                        applyContentScaling(domElement, elementData); // Re-escala o texto
-                    }
-                    generateCode();
-                }, true);
-                break;
-            case 'Toggle':
-                createPropInput(elementPropertiesDiv, 'Texto do Toggle', 'tagText', elementData.tagText, 'text', [], (val) => {
-                    elementData.tagText = val;
-                    const contentSpan = domElement.querySelector('span');
-                    if (contentSpan) {
-                        contentSpan.textContent = val; // ATUALIZA O TEXTO NA GUI
-                        applyContentScaling(domElement, elementData); // Re-escala o texto
-                    }
-                    generateCode();
-                }, true);
-                break;
-            case 'Paragraph':
-                createPropInput(elementPropertiesDiv, 'Conteúdo', 'content', elementData.content, 'text', [], (val) => {
-                    elementData.content = val;
-                    const contentSpan = domElement.querySelector('span');
-                    if (contentSpan) {
-                        contentSpan.textContent = val; // ATUALIZA O TEXTO NA GUI
-                        applyContentScaling(domElement, elementData); // Re-escala o texto
-                    }
-                    generateCode();
-                }, true);
-                break;
-            case 'Text':
-                createPropInput(elementPropertiesDiv, 'Valor Inicial', 'initialValue', elementData.initialValue, 'text', [], (val) => {
-                    elementData.initialValue = val;
-                    const contentDiv = domElement.querySelector('.display-content');
-                    if (contentDiv) {
-                        contentDiv.textContent = val; // ATUALIZA O TEXTO NA GUI
-                        applyContentScaling(domElement, elementData); // Re-escala o texto
-                    }
-                    generateCode();
-                }, true);
-                createPropInput(elementPropertiesDiv, 'Tipo', 'valueType', elementData.valueType, 'select', [
-                    { value: 'STRING', label: 'STRING' },
-                    { value: 'INTEGER', label: 'INTEGER' },
-                    { value: 'FLOAT', label: 'FLOAT' }
-                ], (val) => {
-                    elementData.valueType = val;
-                    generateCode();
-                }, true);
-                break;
-            case 'Dropdown':
-                createPropInput(elementPropertiesDiv, 'Texto da Opção', 'optionText', elementData.optionText, 'text', [], (val) => {
-                    elementData.optionText = val;
-                    const contentSpan = domElement.querySelector('span');
-                    if (contentSpan) {
-                        contentSpan.textContent = val; // ATUALIZA O TEXTO NA GUI
-                        applyContentScaling(domElement, elementData); // Re-escala o texto
-                    }
-                    generateCode();
-                }, true);
-                break;
-            case 'List':
-                createPropInput(elementPropertiesDiv, 'Nome da Lista', 'listText', elementData.listText, 'text', [], (val) => {
-                    elementData.listText = val;
-                    const contentSpan = domElement.querySelector('span');
-                    if (contentSpan) {
-                        contentSpan.textContent = val; // ATUALIZA O TEXTO NA GUI
-                        applyContentScaling(domElement, elementData); // Re-escala o texto
-                    }
-                    generateCode();
-                }, true);
-                break;
-        }
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.id = 'deleteElementBtn';
-        deleteBtn.textContent = 'Deletar Elemento';
-        deleteBtn.onclick = () => {
-            if (confirm(`Tem certeza que deseja deletar o elemento ${elementData.id}?`)) {
-                removeElement(elementData.id);
-            }
-        };
-        elementPropertiesDiv.appendChild(deleteBtn);
-
-        // Garante que a escala é aplicada corretamente na primeira renderização
-        if (domElement) {
-            applyContentScaling(domElement, elementData);
-        }
+        table.appendChild(tbody);
+        elementPropertiesDiv.appendChild(table);
     }
 
     // Adicionado um parâmetro `isElementProp` para controlar se o renderPropertiesPanel é chamado
