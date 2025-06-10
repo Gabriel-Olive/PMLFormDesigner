@@ -116,7 +116,9 @@ body {
     min-width: 250px;
     max-width: 300px;
     width: 100%;
-    margin-bottom: 20px; /* Espaço entre as propriedades da forma e do elemento */
+    margin-bottom: 18px; /* Espaço entre propriedades da forma e do elemento */
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
 .form-properties h2 {
@@ -521,4 +523,10 @@ body {
     top: 0;
     bottom: 0;
     height: 100%;
+}
+
+.divider {
+    height: 12px;
+    width: 100%;
+    /* Um espaço visual, pode ser só margin ou uma linha sutil */
 }
