@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online PML Form Designer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Online PML Form Designer</h1>
+        <p>Crie e ajuste sua GUI visualmente, gerando o código PML em tempo real.</p>
+    </div>
+
+    <div class="main-container">
+        <div class="palette">
+            <h2>Elementos</h2>
+            <div class="palette-item" data-type="Button">Botão</div>
+            <div class="palette-item" data-type="Toggle">Alternador (Toggle)</div>
+            <div class="palette-item" data-type="Paragraph">Texto Estático</div>
+            <div class="palette-item" data-type="Text">Caixa de Texto</div>
+            <div class="palette-item" data-type="Dropdown">Seletor (Dropdown)</div> <div class="palette-item" data-type="List">Lista</div>
+            <button id="clearCanvas">Limpar Tela</button>
+        </div>
+
+        <div class="gui-area-wrapper">
+            <div class="form-properties">
+                <h2>Propriedades da Forma</h2>
+                <div class="prop-group">
+                    <label for="formWidth">Largura (PML):</label>
+                    <input type="number" id="formWidth" value="44" step="0.01">
+                </div>
+                <div class="prop-group">
+                    <label for="formHeight">Altura (PML):</label>
+                    <input type="number" id="formHeight" value="16.96" step="0.01">
+                </div>
+            </div>
+            <div class="gui-canvas" id="guiCanvas">
+                <h2>Área da GUI</h2>
+                </div>
+        </div>
+
+        <div class="properties-panel" id="propertiesPanel">
+            <h2>Propriedades do Elemento</h2>
+            <div id="noElementSelected">Nenhum elemento selecionado.</div>
+            <div id="elementProperties" style="display: none;">
+                </div>
+        </div>
+
+        <div class="code-output">
+            <h2>Código Gerado (PML)</h2>
+            <pre><code id="generatedCode"></code></pre>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
