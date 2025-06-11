@@ -404,7 +404,7 @@ exit
             tdLabelType.textContent = 'Tipo';
             const tdInputType = document.createElement('td');
             const select = document.createElement('select');
-            ['STRING', 'NUMBER', 'DATE'].forEach(opt => {
+            ['STRING', 'REAL'].forEach(opt => {
                 const option = document.createElement('option');
                 option.value = opt;
                 option.textContent = opt;
