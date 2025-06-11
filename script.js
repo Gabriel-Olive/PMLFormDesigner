@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const GRID_SNAP_X = 0.5; // 0.5 unidade PML
     const GRID_SNAP_Y = 1;   // 1 unidade PML
 
-    const SNAP_THRESHOLD = 5;
+    const SNAP_THRESHOLD = 10; // ou até 15
     let activeSnapLines = [];
 
     // --- Funções Auxiliares ---
