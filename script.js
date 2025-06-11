@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDraggable = null;
     let offsetX, offsetY;
 
-    const GRID_SNAP = 1;
-    const CANVAS_UNIT_MULTIPLIER = 10;
+    const GRID_SNAP_X = 0.5; // 0.5 unidade PML
+    const GRID_SNAP_Y = 1;   // 1 unidade PML
 
     const SNAP_THRESHOLD = 5;
     let activeSnapLines = [];
@@ -874,10 +874,14 @@ exit
         });
 
         if (!snappedX) {
-            newLeft = Math.round(newLeft / GRID_SNAP) * GRID_SNAP;
+            // Snap horizontal de 0.5 unidade PML (5px)
+            const snapPxX = GRID_SNAP_X * CANVAS_UNIT_MULTIPLIER;
+            newLeft = Math.round(newLeft / snapPxX) * snapPxX;
         }
         if (!snappedY) {
-            newTop = Math.round(newTop / GRID_SNAP) * GRID_SNAP;
+            // Snap vertical de 1 unidade PML (10px)
+            const snapPxY = GRID_SNAP_Y * CANVAS_UNIT_MULTIPLIER;
+            newTop = Math.round(newTop / snapPxY) * snapPxY;
         }
 
         newLeft = Math.max(0, Math.min(newLeft, guiCanvas.offsetWidth - currentElementWidth));
