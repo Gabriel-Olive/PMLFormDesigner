@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const SNAP_THRESHOLD = 10; // ou até 15
     let activeSnapLines = [];
 
+    const CANVAS_UNIT_MULTIPLIER = 10; // 1 unidade PML = 10px
+
     // --- Funções Auxiliares ---
 
     function updateCanvasSizeAndElements() {
