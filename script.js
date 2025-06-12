@@ -630,12 +630,12 @@ exit
         let defaultWidth;
         let defaultHeight;
         let minWidth = 50;
-        let minHeight = 23;
+        let minHeight = 10;
 
         switch (type) {
             case 'Button':
                 defaultWidth = 75;
-                defaultHeight = 23;
+                defaultHeight = 10;
                 break;
             case 'Toggle':
                 defaultWidth = 100;
