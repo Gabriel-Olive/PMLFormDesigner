@@ -130,11 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generateCode() {
         let gadgetsCode = '';
-        elementsOnCanvas.forEach(element => { // <-- corrigido aqui
+        elementsOnCanvas.forEach(element => {
             const x = pxToPML(element.left);
             const y = pxTopToPML(element.top);
             const width = pxToPML(element.width);
-            const height = pxHeightToPML(element.height);
+            const height = pxHeightToPML(element.height); // <-- proporcional!
 
             switch (element.type) {
                 case 'Button':
