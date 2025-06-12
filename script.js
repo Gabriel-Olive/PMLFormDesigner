@@ -635,7 +635,7 @@ exit
         switch (type) {
             case 'Button':
                 defaultWidth = 75;
-                defaultHeight = 10;
+                defaultHeight = 23;
                 break;
             case 'Toggle':
                 defaultWidth = 100;
