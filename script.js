@@ -993,8 +993,6 @@ exit
     }
 
     function pxHeightToPML(heightPx) {
-        const canvasHeightPx = formHeightPML * CANVAS_UNIT_MULTIPLIER;
-        if (canvasHeightPx === 0) return 0;
-        return Math.round((heightPx / canvasHeightPx) * formHeightPML * 100) / 100;
+        return Math.round((heightPx / 23) * 100) / 100;
     }
 });
